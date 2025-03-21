@@ -8,9 +8,9 @@ const reclamationSchema = new mongoose.Schema(
       unique: true,
     },
     stagiaire: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
+      nom: String,
+      prenom: String,
+      id: String,
     },
     chambre: {
       type: String,
@@ -44,8 +44,9 @@ const reclamationSchema = new mongoose.Schema(
       default: "En attente",
     },
     assigneA: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      nom: String,
+      prenom: String,
+      id: String,
     },
     derniereMiseAJour: {
       type: Date,
@@ -60,6 +61,8 @@ const reclamationSchema = new mongoose.Schema(
         },
       },
     ],
+    commentaireResolution: String,
+    raisonRejet: String,
   },
   { timestamps: true },
 )

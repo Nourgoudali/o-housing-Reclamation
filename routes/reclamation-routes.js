@@ -1,31 +1,32 @@
 import express from "express"
 import {
-  getReclamations,
+  getAllReclamations,
   getReclamationById,
   createReclamation,
   updateReclamationStatus,
   updateReclamationPriority,
-  assignReclamation,
-  acceptReclamation,
-  rejectReclamation,
+  deleteReclamation,
 } from "../controllers/reclamation-controller.js"
-import { isAuthenticated, isAdmin, isResponsable } from "../middleware/auth-middleware.js"
 
 const router = express.Router()
 
-// Routes publiques
-router.get("/", getReclamations)
+// Obtenir toutes les réclamations avec filtres
+router.get("/", getAllReclamations)
+
+// Obtenir une réclamation par ID
 router.get("/:id", getReclamationById)
 
-// Routes protégées
-router.post("/", isAuthenticated, createReclamation)
+// Créer une nouvelle réclamation
+router.post("/", createReclamation)
 
-// Routes pour les admins et responsables
-router.patch("/:id/status", isAuthenticated, updateReclamationStatus)
-router.patch("/:id/priority", isAuthenticated, isAdmin, updateReclamationPriority)
-router.patch("/:id/assign", isAuthenticated, isAdmin, assignReclamation)
-router.patch("/:id/accept", isAuthenticated, isResponsable, acceptReclamation)
-router.patch("/:id/reject", isAuthenticated, isResponsable, rejectReclamation)
+// Mettre à jour le statut d'une réclamation
+router.patch("/:id/status", updateReclamationStatus)
+
+// Mettre à jour la priorité d'une réclamation
+router.patch("/:id/priority", updateReclamationPriority)
+
+// Supprimer une réclamation
+router.delete("/:id", deleteReclamation)
 
 export default router
 
